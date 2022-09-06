@@ -2,7 +2,7 @@ import os, uuid
 from pathlib import Path
 import string 
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 HTML_FILE_PATH = os.path.join(BASE_DIR,'index.html')
 
 
@@ -12,7 +12,7 @@ class HtmlShell(object):
         
         """
         self.title = title
-        self.content = ''
+        self.content_ = ''
         self.type = doc_type
         if doc_type=='html':
             self.top = "<!DOCTYPE html>"
@@ -45,7 +45,7 @@ class HtmlShell(object):
             
 
     def __iter__(self):
-        buck = [self.top,self.html, self.head, self.content]
+        buck = [self.top,self.html, self.head, self.content_]
         for i in buck:yield i
     
     def __repr__(self) -> str:
@@ -54,13 +54,13 @@ class HtmlShell(object):
     def __str__(self):
         return f"<HtmlShell object: {self.title}>"
 
-    def insert(self,obj):
-        self.content = obj
+    def insert(self,obj:str):
+        self.content_ = "".join(str(obj))
         return self 
     
     def to_file(self):
         if self.type == 'html':
-            self.all = self.top + "\n" + self.html + "\n"  + self.head + '\n' + self.content  + "\n"+ "</html>"
+            self.all = self.top + "\n" + self.html + "\n"  + self.head + '\n' + self.content_  + "\n"+ "</html>"
         elif self.type == 'xml':
             self.all = "<html xmlns='http://www.w3.org/1999/xhtml'>"
         else:
@@ -70,7 +70,6 @@ class HtmlShell(object):
         with open(filepath, 'w') as html:
             html.write(file_content)
     
-
 class HtmlSkeleton(object):
     def __init__(self):
         self.index = 1
@@ -85,7 +84,7 @@ class HtmlSkeleton(object):
         return self 
     
     def finalise(self):
-        self.barebones = [i[1].obj for i in sorted(self.innards.items(), reverse=False)]
+        self.barebones = "".join(i[1].obj for i in sorted(self.innards.items(), reverse=False))
  
     def load_string(self, obj:string):
         str_obj = obj 
@@ -105,9 +104,14 @@ class HtmlSkeleton(object):
     def remove(self, name):
         del self.innards[name]
         pass 
-    
-   
 
+    def __str__(self) -> str:
+        return self.barebones
+
+    def __repr__(self) -> str:
+        return self.barebones
+
+    
 class Marker(object):
     def __init__(self, object_to_mark, name=None) -> None:
         self.obj = object_to_mark
@@ -141,12 +145,3 @@ class Marker(object):
     def __repr__(self) -> str:
         return str(self.id )
     
-skl = HtmlSkeleton()
-skl.add('one',name='first')
-skl.add('three')
-skl.add('two')
-skl.remove('first')
-print(skl.innards)
-# g = Marker('game',(1,'name'))
-# h = Marker('house',(2,))
-# print(g>h)
