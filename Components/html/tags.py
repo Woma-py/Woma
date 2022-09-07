@@ -1,4 +1,7 @@
 class Tag:
+    """
+    Base class for html tags
+    """
     def __init__(self,body=None,**kwargs) -> None:
         self.name = kwargs.get('name')
         self._class = kwargs.get('classname', '')
@@ -25,6 +28,9 @@ class Tag:
         return self.create()
     
 class Header(Tag):
+    """
+    Base class for header tags
+    """
     def __init__(self,type_ , body=None, **kwargs) -> None:
         super().__init__( body, **kwargs)
         self.type_ = type_ 
@@ -36,6 +42,9 @@ class Header(Tag):
 
 
 class H1(Header):
+    """
+    sub class for h1 tag
+    """
     def __init__(self,body=None, **kwargs) -> None:
         super().__init__(type_=1,  body, **kwargs)
         self.type_ = 1 
@@ -43,6 +52,9 @@ class H1(Header):
         self.create()
 
 class H2(Header):
+    """
+    sub class for h2 tag
+    """
     def __init__(self,body=None, **kwargs) -> None:
         super().__init__(type_=2,  body, **kwargs)
         self.type_ = 2 
@@ -50,6 +62,9 @@ class H2(Header):
         self.create()
 
 class H3(Header):
+    """
+    sub class for h3 tag
+    """
     def __init__(self,body=None, **kwargs) -> None:
         super().__init__(type_=3,  body, **kwargs)
         self.type_ = 3 
@@ -57,6 +72,9 @@ class H3(Header):
         self.create()
 
 class H4(Header):
+    """
+    sub class for h4 tag
+    """
     def __init__(self,body=None, **kwargs) -> None:
         super().__init__(type_=4,  body, **kwargs)
         self.type_ = 4 
@@ -64,6 +82,9 @@ class H4(Header):
         self.create()
 
 class H5(Header):
+    """
+    sub class for h5 tag
+    """
     def __init__(self,body=None, **kwargs) -> None:
         super().__init__(type_=5,  body, **kwargs)
         self.type_ = 5 
@@ -71,6 +92,9 @@ class H5(Header):
         self.create()
 
 class H6(Header):
+    """
+    sub class for h6 tag
+    """
     def __init__(self,body=None, **kwargs) -> None:
         super().__init__(type_=6,  body, **kwargs)
         self.type_ = 6 
