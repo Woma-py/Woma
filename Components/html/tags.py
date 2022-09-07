@@ -35,4 +35,44 @@ class Header(Tag):
         self.create()
 
 
+class H1(Header):
+    def __init__(self,body=None, **kwargs) -> None:
+        super().__init__(type_=1,  body, **kwargs)
+        self.type_ = 1 
+        self.name = 'h1'
+        self.create()
 
+class H2(Header):
+    def __init__(self,body=None, **kwargs) -> None:
+        super().__init__(type_=2,  body, **kwargs)
+        self.type_ = 2 
+        self.name = 'h2'
+        self.create()
+
+class H3(Header):
+    def __init__(self,body=None, **kwargs) -> None:
+        super().__init__(type_=3,  body, **kwargs)
+        self.type_ = 3 
+        self.name = 'h3'
+        self.create()
+
+class H4(Header):
+    def __init__(self,body=None, **kwargs) -> None:
+        super().__init__(type_=4,  body, **kwargs)
+        self.type_ = 4 
+        self.name = 'h4'
+        self.create()
+
+class H5(Header):
+    def __init__(self,body=None, **kwargs) -> None:
+        super().__init__(type_=5,  body, **kwargs)
+        self.type_ = 5 
+        self.name = 'h5'
+        self.create()
+
+class H6(Header):
+    def __init__(self,body=None, **kwargs) -> None:
+        super().__init__(type_=6,  body, **kwargs)
+        self.type_ = 6 
+        self.name = 'h6'
+        self.create()
