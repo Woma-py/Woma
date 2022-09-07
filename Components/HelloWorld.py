@@ -16,5 +16,5 @@ sh = HtmlShell(title='whatever')
 sh.insert('<h1>Hello world</h1>')
 sh.to_file()
 
-or you could use the html sjeleton directly; battery low later i will fine tune the processes
+or you could use the html skeleton directly; battery low later i will fine tune the processes
 """
