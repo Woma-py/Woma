@@ -48,7 +48,7 @@ body{
     box-sizing: border-box;
 }
 </style>
-"""
+
 body.load_string(style_string) #added styling
 
 #now to wrap it all as a body element
@@ -58,3 +58,4 @@ body.wrap('body')
 #c'est fini, now put this into the shell
 mainObj.insert(body)
 mainObj.to_file()
+
