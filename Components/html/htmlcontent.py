@@ -1,10 +1,6 @@
-import os, uuid 
-from pathlib import Path
-import string 
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-HTML_FILE_PATH = os.path.join(BASE_DIR,'index.html')
-
+import uuid 
+from html.config import BASE_DIR,HTML_FILE_PATH
+from collections import OrderedDict
 
 class HtmlShell(object):
     def __init__(self,doc_type:str='html', title="Document",charset="UTF-8", http_equiv="X-UA-Compatible",content="IE=edge", name__meta="viewport", language='en',**kwargs) -> None:
@@ -28,7 +24,7 @@ class HtmlShell(object):
                 script_box_from_link  = "".join(f"<script src='{str(i)}'></script>" for i in script_from_link) 
             else:script_box_from_link=''
             
-            other_links = kwargs.get('link_css')
+            other_links:list = kwargs.get('link_css')
             if other_links is not None:
                 css = "".join(f"<link rel='stylesheet' href='{str(i)}'>" for i in other_links) #capture css
             else: css=''
@@ -72,44 +68,49 @@ class HtmlShell(object):
     
 class HtmlSkeleton(object):
     def __init__(self):
-        self.index = 1
-        self.innards = {}
+        #self.index = 1
+        self.innards = OrderedDict()
+    
+    def __str__(self) -> str:
+        return self.barebones
+
+    def __repr__(self) -> str:
+        return self.barebones
+
+    def __iter__(self):
+        for i in self.innards:
+            yield i 
 
     def add(self, obj,name=None):
         if name is None:name = str(uuid.uuid4())
-        marked_obj = Marker(obj, (self.index, name))
+        marked_obj = Marker(obj,  name)
         self.innards[name] = marked_obj 
-        self.index += 1
+        #self.index += 1
         self.finalise()
         return self 
     
     def finalise(self):
-        self.barebones = "".join(i[1].obj for i in sorted(self.innards.items(), reverse=False))
+        self.barebones = "".join(i[1].obj for i in self.innards.items())
  
-    def load_string(self, obj:string):
+    def load_string(self, obj:str):
         str_obj = obj 
         self.add(str_obj)
     
-    def load_file(self, path:string):
+    def load_file(self, path:str):
         with open(path, 'r') as file:
             doc = file.read(); container= ""
             for i in doc:
                 container.join(i)
         self.add(container)
     
-    def __iter__(self):
-        for i in self.innards:
-            yield i 
-
     def remove(self, name):
         del self.innards[name]
         pass 
 
-    def __str__(self) -> str:
-        return self.barebones
+    def wrap(self, wrapper:str):
+        self.barebones = f"<{wrapper}> {self.barebones} </{wrapper}>"
 
-    def __repr__(self) -> str:
-        return self.barebones
+
 
     
 class Marker(object):
